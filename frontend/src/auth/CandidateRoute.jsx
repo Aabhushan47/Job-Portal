@@ -4,9 +4,9 @@ import { UserContext } from "../contexts/userContext";
 import { Navigate } from "react-router-dom";
 
 const CandidateRoute = ({ Component }) => {
-  const { loggedUser } = useContext(UserContext);
+  const { loggedUser, isAuthorized } = useContext(UserContext);
 
-  return loggedUser !== null && loggedUser.role === "candidate" ? (
+  return loggedUser && loggedUser.role === "candidate" ? (
     <Component />
   ) : (
     <Navigate to="/login" />

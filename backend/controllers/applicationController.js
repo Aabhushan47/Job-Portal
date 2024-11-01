@@ -1,6 +1,7 @@
 const Application = require("../models/applicationModel");
 const cloudinary = require("cloudinary");
 const Job = require("../models/jobModel");
+const { application } = require("express");
 exports.getCandidateApplications = async (req, res) => {
   try {
     const application = await Application.find({
@@ -37,7 +38,11 @@ exports.postApplication = async (req, res) => {
       resource_type: "auto",
     });
 
-    const { name, email, phone, coverLetter, address, jobId } = req.body;
+    const { name, email, phone, coverLetter, address, jobId, status } =
+      req.body;
+    if (!name || !email || !phone || !coverLetter || !address) {
+      return res.status(400).json({ error: "Enter all details" });
+    }
 
     const applicant = {
       applicant_id: req.user._id,
@@ -72,6 +77,7 @@ exports.postApplication = async (req, res) => {
       applicant,
       employer,
       resume,
+      status,
     });
 
     res.status(200).json({
@@ -87,22 +93,28 @@ exports.postApplication = async (req, res) => {
   }
 };
 
-// exports.postApplication = async (req, res) => {
+// exports.updateStatus = async (req, res) => {
 //   try {
-//     if (!req.file) {
-//       return res.status(400).json({ error: "No file uploaded" });
-//     }
 
-//     const resume = await cloudinary.uploader.upload(req.file.path, {
-//       resource_type: "raw",
-//     });
-//     res
-//       .status(200)
-//       .json({ message: "File uploaded successfully", data: resume });
 //   } catch (err) {
-//     console.error(err);
-//     res
-//       .status(500)
-//       .json({ error: "Internal Server Error", message: err.message });
+//     res.status(500).json({ error: "Internal Server Error" }, err.message);
 //   }
 // };
+
+exports.deleteApplication = async (req, res) => {
+  try {
+    const { id } = req.params;
+    let application = await Application.findOne({
+      _id: id,
+    });
+    if (!application) {
+      return res.status(404).json({ error: "No application found" });
+    }
+    await Application.deleteOne();
+    res
+      .status(200)
+      .json({ success: true, message: "Deleted Succesfully", application });
+  } catch (err) {
+    res.status(500).json({ error: "Internal Server error", err });
+  }
+};

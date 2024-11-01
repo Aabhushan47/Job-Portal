@@ -4,6 +4,7 @@ const {
   getCandidateApplications,
   getEmployerApplications,
   postApplication,
+  deleteApplication,
 } = require("../controllers/applicationController");
 const upload = require("../utils/fileUpload");
 const router = express.Router();
@@ -15,6 +16,11 @@ router.post(
   upload.single("file"),
   isCandidate,
   postApplication
+);
+router.delete(
+  "/candidate/deleteapplication/:id",
+  isCandidate,
+  deleteApplication
 );
 
 module.exports = router;

@@ -83,124 +83,283 @@ const PostNewJob = () => {
   return (
     <>
       <ToastContainer position="top-center" />
-      <div className="main" style={{ color: "black" }}>
-        <form className="form">
-          {/* Title */}
-          <input
-            type="text"
-            id="title"
-            className="inp-post"
-            value={title}
-            name="title"
-            onChange={handleChange("title")}
-            placeholder="Job Title"
-          />
-          {/* Description */}
-          <textarea
-            id="description"
-            className="inp-post"
-            value={description}
-            name="description"
-            onChange={handleChange("description")}
-            placeholder="Job Description"
-          />
-          {/* Category */}
-          <input
-            type="text"
-            id="category"
-            className="inp-post"
-            value={category}
-            name="category"
-            onChange={handleChange("category")}
-            placeholder="Category"
-          />
-          {/* Country */}
-          <select
-            type="text"
-            id="country"
-            className="inp-post"
-            value={country}
-            name="country"
-            onChange={handleChange("country")}
-          >
-            <option value="">Select a country</option>
-            {countriesList.map((e, i) => (
-              <option key={i} value={e.name}>
-                {e.name}
-              </option>
-            ))}
-          </select>
-          {/* City */}
-          <input
-            type="text"
-            id="city"
-            className="inp-post"
-            value={city}
-            name="city"
-            onChange={handleChange("city")}
-            placeholder="City"
-          />
-          {/* Location */}
-          <input
-            type="text"
-            id="location"
-            className="inp-post"
-            value={location}
-            name="location"
-            onChange={handleChange("location")}
-            placeholder="Location"
-          />
-          {/* Salary Type */}
-          <select
-            name="salaryType"
-            className="inp-post"
-            id="salaryType"
-            value={salaryType}
-            onChange={handleChange("salaryType")}
-          >
-            <option>Select Salary Type</option>
-            <option value="fixedSalary">Fixed Salary</option>
-            <option value="rangedSalary">Ranged Salary</option>
-          </select>
-          {/* Fixed Salary */}
-          {salaryType === "fixedSalary" && (
-            <input
-              type="number"
-              id="fixedSalary"
-              className="inp-post"
-              value={fixedSalary}
-              name="fixedSalary"
-              onChange={handleChange("fixedSalary")}
-              placeholder="Fixed Salary"
-            />
-          )}
-          {/* Ranged Salary */}
-          {salaryType === "rangedSalary" && (
-            <>
-              <input
-                type="number"
-                id="salaryFrom"
-                className="inp-post"
-                value={salaryFrom}
-                name="salaryFrom"
-                onChange={handleChange("salaryFrom")}
-                placeholder="Salary From"
-              />
-              <input
-                type="number"
-                id="salaryTo"
-                className="inp-post"
-                value={salaryTo}
-                name="salaryTo"
-                onChange={handleChange("salaryTo")}
-                placeholder="Salary To"
-              />
-            </>
-          )}
-          <button onClick={handleSubmit}>Submit</button>
-        </form>
+      <div className="min-h-screen bg-gray-100 py-6 px-4 flex flex-col justify-center sm:py-12">
+        <div className="relative py-3 sm:max-w-xl sm:mx-auto">
+          <div className="relative px-4 py-10 bg-white mx-8 md:mx-0 shadow rounded-3xl sm:p-10">
+            <div className="max-w-md mx-auto">
+              <div className="flex items-center justify-center space-x-5">
+                <div className="block pl-2 font-semibold text-2xl text-gray-700 ">
+                  <h2>Add New Job</h2>
+                </div>
+              </div>
+              <form className="divide-y divide-gray-200">
+                <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
+                  <div className="flex flex-col">
+                    <label className="leading-loose">Job Title</label>
+                    <input
+                      type="text"
+                      name="title"
+                      value={title}
+                      onChange={handleChange("title")}
+                      className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
+                      placeholder="Job title"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="leading-loose">Category</label>
+                    <input
+                      type="text"
+                      name="category"
+                      value={category}
+                      onChange={handleChange("category")}
+                      className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
+                      placeholder="Job category"
+                    />
+                  </div>
+                  <div className="flex flex-col sm:flex-row gap-5">
+                    <div className="flex flex-col w-full">
+                      <label className="leading-loose">Country</label>
+                      <select
+                        type="text"
+                        name="country"
+                        value={country}
+                        onChange={handleChange("country")}
+                        className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
+                        placeholder="Country"
+                      >
+                        <option value="">Select a country</option>
+                        {countriesList.map((e, i) => (
+                          <option key={i} value={e.name}>
+                            {e.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="flex flex-col w-full">
+                      <label className="leading-loose">City</label>
+                      <input
+                        type="text"
+                        name="city"
+                        value={city}
+                        onChange={handleChange("city")}
+                        className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
+                        placeholder="City"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="leading-loose">Location</label>
+                    <input
+                      type="text"
+                      name="location"
+                      value={location}
+                      onChange={handleChange("location")}
+                      className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
+                      placeholder="Specific location"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="leading-loose">Job Description</label>
+                    <textarea
+                      name="description"
+                      value={description}
+                      onChange={handleChange("description")}
+                      className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
+                      placeholder="Job description"
+                      rows="4"
+                    ></textarea>
+                  </div>
+                  <div className="flex flex-col space-y-4">
+                    <label className="leading-loose text-gray-700">
+                      Salary
+                    </label>
+
+                    {/* Salary Type Select */}
+                    <select
+                      name="salaryType"
+                      className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
+                      id="salaryType"
+                      value={salaryType}
+                      onChange={handleChange("salaryType")}
+                    >
+                      <option value="">Select Salary Type</option>
+                      <option value="fixedSalary">Fixed Salary</option>
+                      <option value="rangedSalary">Ranged Salary</option>
+                    </select>
+
+                    {/* Fixed Salary Input */}
+                    {salaryType === "fixedSalary" && (
+                      <input
+                        type="number"
+                        id="fixedSalary"
+                        className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
+                        value={fixedSalary}
+                        name="fixedSalary"
+                        onChange={handleChange("fixedSalary")}
+                        placeholder="Fixed Salary"
+                      />
+                    )}
+
+                    {/* Ranged Salary Inputs */}
+                    {salaryType === "rangedSalary" && (
+                      <div className="flex flex-col space-y-4">
+                        <input
+                          type="number"
+                          id="salaryFrom"
+                          className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
+                          value={salaryFrom}
+                          name="salaryFrom"
+                          onChange={handleChange("salaryFrom")}
+                          placeholder="Salary From"
+                        />
+                        <input
+                          type="number"
+                          id="salaryTo"
+                          className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
+                          value={salaryTo}
+                          name="salaryTo"
+                          onChange={handleChange("salaryTo")}
+                          placeholder="Salary To"
+                        />
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className="pt-4 flex items-center space-x-4">
+                  <button
+                    type="submit"
+                    onClick={handleSubmit}
+                    className="bg-blue-500 flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none hover:bg-blue-600 transition duration-200"
+                  >
+                    Save Job Details
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
     </>
+    // <>
+    //   <ToastContainer position="top-center" />
+    //   <div className="main" style={{ color: "black" }}>
+    //     <form className="form">
+    //       {/* Title */}
+    //       <input
+    //         type="text"
+    //         id="title"
+    //         className="inp-post"
+    //         value={title}
+    //         name="title"
+    //         onChange={handleChange("title")}
+    //         placeholder="Job Title"
+    //       />
+    //       {/* Description */}
+    //       <textarea
+    //         id="description"
+    //         className="inp-post"
+    //         value={description}
+    //         name="description"
+    //         onChange={handleChange("description")}
+    //         placeholder="Job Description"
+    //       />
+    //       {/* Category */}
+    //       <input
+    //         type="text"
+    //         id="category"
+    //         className="inp-post"
+    //         value={category}
+    //         name="category"
+    //         onChange={handleChange("category")}
+    //         placeholder="Category"
+    //       />
+    //       {/* Country */}
+    //       <select
+    //         type="text"
+    //         id="country"
+    //         className="inp-post"
+    //         value={country}
+    //         name="country"
+    //         onChange={handleChange("country")}
+    //       >
+    //         <option value="">Select a country</option>
+    //         {countriesList.map((e, i) => (
+    //           <option key={i} value={e.name}>
+    //             {e.name}
+    //           </option>
+    //         ))}
+    //       </select>
+    //       {/* City */}
+    //       <input
+    //         type="text"
+    //         id="city"
+    //         className="inp-post"
+    //         value={city}
+    //         name="city"
+    //         onChange={handleChange("city")}
+    //         placeholder="City"
+    //       />
+    //       {/* Location */}
+    //       <input
+    //         type="text"
+    //         id="location"
+    //         className="inp-post"
+    //         value={location}
+    //         name="location"
+    //         onChange={handleChange("location")}
+    //         placeholder="Location"
+    //       />
+    //       {/* Salary Type */}
+    //       <select
+    //         name="salaryType"
+    //         className="inp-post"
+    //         id="salaryType"
+    //         value={salaryType}
+    //         onChange={handleChange("salaryType")}
+    //       >
+    //         <option>Select Salary Type</option>
+    //         <option value="fixedSalary">Fixed Salary</option>
+    //         <option value="rangedSalary">Ranged Salary</option>
+    //       </select>
+    //       {/* Fixed Salary */}
+    //       {salaryType === "fixedSalary" && (
+    //         <input
+    //           type="number"
+    //           id="fixedSalary"
+    //           className="inp-post"
+    //           value={fixedSalary}
+    //           name="fixedSalary"
+    //           onChange={handleChange("fixedSalary")}
+    //           placeholder="Fixed Salary"
+    //         />
+    //       )}
+    //       {/* Ranged Salary */}
+    //       {salaryType === "rangedSalary" && (
+    //         <>
+    //           <input
+    //             type="number"
+    //             id="salaryFrom"
+    //             className="inp-post"
+    //             value={salaryFrom}
+    //             name="salaryFrom"
+    //             onChange={handleChange("salaryFrom")}
+    //             placeholder="Salary From"
+    //           />
+    //           <input
+    //             type="number"
+    //             id="salaryTo"
+    //             className="inp-post"
+    //             value={salaryTo}
+    //             name="salaryTo"
+    //             onChange={handleChange("salaryTo")}
+    //             placeholder="Salary To"
+    //           />
+    //         </>
+    //       )}
+    //       <button onClick={handleSubmit}>Submit</button>
+    //     </form>
+    //   </div>
+    // </>
   );
 };
 

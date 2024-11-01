@@ -56,6 +56,11 @@ const applicationSchema = mongoose.Schema({
       required: true,
     },
   },
+  status: {
+    type: String,
+    enum: ["pending", "accepted", "rejected"],
+    default: "pending",
+  },
 });
 
 const Application = mongoose.model("Application", applicationSchema);

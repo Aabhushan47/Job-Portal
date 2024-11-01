@@ -18,6 +18,7 @@ const JobDetail = () => {
   }, [id]);
 
   const {
+    _id,
     title,
     description,
     category,
@@ -100,7 +101,7 @@ const JobDetail = () => {
             <div className="flex justify-end">
               <Link
                 className="inline-flex items-center px-5 py-2.5 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600"
-                to="#"
+                to={`/candidate/application/${_id}`}
               >
                 Apply Now
               </Link>

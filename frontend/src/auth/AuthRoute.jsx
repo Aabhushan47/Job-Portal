@@ -4,9 +4,9 @@ import { UserContext } from "../contexts/userContext";
 import { Navigate } from "react-router-dom";
 
 const AuthRoute = ({ Component }) => {
-  const { loggedUser } = useContext(UserContext);
+  const { loggedUser, isAuthorized } = useContext(UserContext);
 
-  return loggedUser !== null ? <Component /> : <Navigate to="/login" />;
+  return loggedUser ? <Component /> : <Navigate to="/login" />;
 };
 
 export default AuthRoute;

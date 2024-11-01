@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { countries } from "countries-list";
 import { useParams } from "react-router-dom";
 import { API } from "../../../config";

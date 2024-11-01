@@ -17,7 +17,9 @@ import { API } from "./config";
 import axios from "axios";
 import ViewMyJobs from "./src/pages/employer/ViewMyJobs";
 import UpdateMyJob from "./src/pages/employer/UpdateMyJob";
-import MyApplications from "./src/pages/candidate/MyApplications";
+import Applications from "./src/pages/candidate/Applications";
+import PostApplication from "./src/pages/candidate/PostApplication";
+import RandomPage from "./src/pages/employer/RandomPage";
 
 const MyRoute = () => {
   const [loggedUser, setLoggedUser] = useState({});
@@ -48,6 +50,8 @@ const MyRoute = () => {
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<HomePage />} />
+            <Route path="/random" element={<RandomPage />} />
+
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/dashboard" element={<Dashboard />} />
@@ -58,7 +62,11 @@ const MyRoute = () => {
             />
             <Route
               path="/candidate/applications"
-              element={<PrivateRoute Component={MyApplications} />}
+              element={<PrivateRoute Component={Applications} />}
+            />
+            <Route
+              path="/candidate/application/:jobId"
+              element={<PrivateRoute Component={PostApplication} />}
             />
             <Route
               path="/jobs"
@@ -80,6 +88,11 @@ const MyRoute = () => {
               path="employer/myjobs"
               element={<EmployerRoute Component={ViewMyJobs} />}
             />
+            <Route
+              path="/employer/applications"
+              element={<EmployerRoute Component={Applications} />}
+            />
+
             <Route
               path="/employer/updateproduct/:jobId"
               element={<EmployerRoute Component={UpdateMyJob} />}
