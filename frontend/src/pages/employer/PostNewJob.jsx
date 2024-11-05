@@ -1,8 +1,7 @@
 import React, { useContext, useState } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { API } from "../../../config";
-import "react-toastify/dist/ReactToastify.css";
 import { countries } from "countries-list";
 import { useNavigate } from "react-router-dom";
 
@@ -82,10 +81,9 @@ const PostNewJob = () => {
 
   return (
     <>
-      <ToastContainer position="top-center" />
       <div className="min-h-screen bg-gray-100 py-6 px-4 flex flex-col justify-center sm:py-12">
-        <div className="relative py-3 sm:max-w-xl sm:mx-auto">
-          <div className="relative px-4 py-10 bg-white mx-8 md:mx-0 shadow rounded-3xl sm:p-10">
+        <div className="py-3 sm:max-w-xl sm:mx-auto">
+          <div className="px-4 py-10 bg-white mx-8 md:mx-0 shadow rounded-3xl sm:p-10">
             <div className="max-w-md mx-auto">
               <div className="flex items-center justify-center space-x-5">
                 <div className="block pl-2 font-semibold text-2xl text-gray-700 ">

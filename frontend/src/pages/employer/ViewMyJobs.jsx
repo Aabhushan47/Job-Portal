@@ -91,7 +91,7 @@ const ViewMyJobs = () => {
                   className={`w-full text-2xl text-wrap font-semibold text-gray-900 mb-2 p-2 ${
                     editingMode === job._id
                       ? "border border-gray-300 rounded-lg focus:outline-none"
-                      : "bg-white"
+                      : "bg-transparent"
                   }`}
                   name="title"
                   disabled={editingMode !== job._id}
@@ -111,7 +111,7 @@ const ViewMyJobs = () => {
                     className={`flex-1 w-1/2 text-lg text-gray-700 p-2 ${
                       editingMode === job._id
                         ? "border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                        : "bg-white"
+                        : "bg-transparent"
                     }`}
                     disabled={editingMode !== job._id}
                     value={job.category}
@@ -131,7 +131,7 @@ const ViewMyJobs = () => {
                       className={`text-lg text-gray-700 p-2 ${
                         editingMode === job._id
                           ? "border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                          : "bg-white"
+                          : "bg-transparent"
                       }`}
                       name="city"
                       disabled={editingMode !== job._id}
@@ -142,10 +142,10 @@ const ViewMyJobs = () => {
                       placeholder="Enter city"
                     />
                     <select
-                      className={`text-lg text-gray-700 p-2 ${
+                      className={`text-lg text-black p-2 ${
                         editingMode === job._id
                           ? "border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                          : "bg-white"
+                          : "bg-transparent"
                       }`}
                       name="country"
                       disabled={editingMode !== job._id}
@@ -171,7 +171,7 @@ const ViewMyJobs = () => {
                     className={`flex-1 text-lg text-gray-900 p-2 ${
                       editingMode === job._id
                         ? "border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                        : "bg-white"
+                        : "bg-transparent"
                     }`}
                     name="location"
                     disabled={editingMode !== job._id}
@@ -191,7 +191,7 @@ const ViewMyJobs = () => {
                       className={`w-full text-lg text-gray-700 p-2 ${
                         editingMode === job._id
                           ? "border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                          : "bg-white"
+                          : "bg-transparent"
                       }`}
                       name="fixedSalary"
                       disabled={editingMode !== job._id}
@@ -215,7 +215,7 @@ const ViewMyJobs = () => {
                       className={`w-1/2 text-lg text-gray-700 p-2 ${
                         editingMode === job._id
                           ? "border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                          : "bg-white"
+                          : "bg-transparent"
                       }`}
                       name="salaryFrom"
                       disabled={editingMode !== job._id}
@@ -233,7 +233,7 @@ const ViewMyJobs = () => {
                       className={`w-1/2 text-lg text-gray-700 p-2 ${
                         editingMode === job._id
                           ? "border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                          : "bg-white"
+                          : "bg-transparent"
                       }`}
                       name="salaryTo"
                       disabled={editingMode !== job._id}
@@ -253,7 +253,7 @@ const ViewMyJobs = () => {
                     className={`w-full text-lg text-gray-700 p-2 ${
                       editingMode === job._id
                         ? "border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                        : "bg-white"
+                        : "bg-transparent"
                     }`}
                     name="description"
                     disabled={editingMode !== job._id}

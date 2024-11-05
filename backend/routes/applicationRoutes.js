@@ -5,6 +5,7 @@ const {
   getEmployerApplications,
   postApplication,
   deleteApplication,
+  updateStatus,
 } = require("../controllers/applicationController");
 const upload = require("../utils/fileUpload");
 const router = express.Router();
@@ -17,6 +18,7 @@ router.post(
   isCandidate,
   postApplication
 );
+router.put("/updatestatus/:id", isEmployer, updateStatus);
 router.delete(
   "/candidate/deleteapplication/:id",
   isCandidate,

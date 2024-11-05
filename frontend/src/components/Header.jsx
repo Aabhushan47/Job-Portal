@@ -29,7 +29,7 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-gray-700 text-white py-5 px-4 max-w-full">
+    <header className="bg-gray-700 text-white py-5 px-4 w-full sticky top-0">
       <ToastContainer position="top-center" />
       <div className="flex justify-between items-center">
         <div className="text-2xl font-bold">

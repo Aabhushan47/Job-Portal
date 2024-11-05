@@ -1,12 +1,11 @@
 const Application = require("../models/applicationModel");
 const cloudinary = require("cloudinary");
 const Job = require("../models/jobModel");
-const { application } = require("express");
 exports.getCandidateApplications = async (req, res) => {
   try {
     const application = await Application.find({
       "applicant.applicant_id": req.user._id,
-    });
+    }).sort({ createdAt: -1 });
 
     res.status(200).json({ success: true, application });
   } catch (err) {
@@ -18,7 +17,7 @@ exports.getEmployerApplications = async (req, res) => {
   try {
     const application = await Application.find({
       "employer.employer_id": req.user._id,
-    });
+    }).sort({ createdAt: -1 });
     if (!application) {
       res.status(400).json({ error: "No application found for this user" });
     }
@@ -93,9 +92,51 @@ exports.postApplication = async (req, res) => {
   }
 };
 
+exports.updateStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    let application = await Application.findByIdAndUpdate(
+      id,
+      { status },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    if (!application) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Application not found" });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: `Application ${status}`,
+      application,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: "Internal Server Error",
+      message: err.message,
+    });
+  }
+};
+
 // exports.updateStatus = async (req, res) => {
 //   try {
-
+//     const { id } = req.params;
+//     const { status } = req.body;
+//     let application = await Application.findByIdAndUpdate(id, status, {
+//       new: true,
+//       runValidators: true,
+//     });
+//     res
+//       .status(200)
+//       .json({ success: true, message: "Updated Succesfully", application });
 //   } catch (err) {
 //     res.status(500).json({ error: "Internal Server Error" }, err.message);
 //   }
