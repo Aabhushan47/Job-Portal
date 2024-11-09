@@ -19,7 +19,7 @@ cloudinary.v2.config({
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(morgan("dev"));
-app.use(cors({ origin: 'https://job-portal-5rrw.vercel.app' }));
+app.use(cors({ origin: 'https://job-portal-5rrw.vercel.app',credentials:true }));
 
 //import routes
 const userRoute = require("./routes/userRoutes");
