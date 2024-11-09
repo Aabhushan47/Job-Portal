@@ -22,7 +22,8 @@ app.use(morgan("dev"));
 app.use(
   cors({
     credentials: true,
-    origin: "https://job-portal-5rrw.vercel.app/",
+    origin: "https://job-portal-5rrw.vercel.app",
+    allowedHeaders: "Content-Type,Authorization",
   })
 );
 
