@@ -23,7 +23,6 @@ app.use(
   cors({
     credentials: true,
     origin: "https://job-portal-5rrw.vercel.app",
-    allowedHeaders: "Content-Type,Authorization",
   })
 );
 
