@@ -1,1 +1,1 @@
-export const API = "https://job-portal-one-bice.vercel.app/api";
+export const API = "http://localhost:8000/api";
