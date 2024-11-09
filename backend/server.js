@@ -22,7 +22,7 @@ app.use(morgan("dev"));
 app.use(
   cors({
     credentials: true,
-    origin: "http://localhost:5173",
+    origin: "https://job-portal-5rrw.vercel.app/",
   })
 );
 
