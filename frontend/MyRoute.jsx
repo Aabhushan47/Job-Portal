@@ -4,10 +4,9 @@ import HomePage from "./src/pages/HomePage";
 import JobListing from "./src/pages/JobListing";
 import Register from "./src/pages/Register";
 import Login from "./src/pages/Login";
-import Dashboard from "./src/pages/Dashboard";
 import NotFoundPage from "./src/pages/NotFoundPage";
 import { UserContext } from "./src/contexts/userContext";
-import PrivateRoute from "./src/auth/CandidateRoute";
+import CandidateRoute from "./src/auth/CandidateRoute";
 import EmployerRoute from "./src/auth/EmployerRoute";
 import JobDetail from "./src/pages/JobDetail";
 import Layout from "./src/components/Layout";
@@ -20,8 +19,13 @@ import Applications from "./src/pages/candidate/Applications";
 import PostApplication from "./src/pages/candidate/PostApplication";
 
 const MyRoute = () => {
-  const [loggedUser, setLoggedUser] = useState({});
-  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [loggedUser, setLoggedUser] = useState(() => {
+    const userData = localStorage.getItem("user");
+    return userData ? JSON.parse(userData) : null;
+  });
+  const [isAuthorized, setIsAuthorized] = useState(() => {
+    return !!localStorage.getItem("isAuthorized");
+  });
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -29,15 +33,25 @@ const MyRoute = () => {
         const response = await axios.get(`${API}/getUser`, {
           withCredentials: true,
         });
-        setLoggedUser(response.data.user);
+        const user = response.data.user;
+
+        setLoggedUser(user);
         setIsAuthorized(true);
+
+        // Save to localStorage
+        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("isAuthorized", "true");
       } catch (err) {
         setIsAuthorized(false);
+        localStorage.removeItem("user");
+        localStorage.removeItem("isAuthorized");
       }
     };
 
-    fetchUser();
-  }, [isAuthorized]);
+    if (!loggedUser) {
+      fetchUser();
+    }
+  }, [loggedUser]);
 
   return (
     // UserContext using context API
@@ -50,44 +64,29 @@ const MyRoute = () => {
             <Route path="/" element={<HomePage />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/" element={<PrivateRoute Component={HomePage} />} />
-            <Route
-              path="/candidate"
-              element={<PrivateRoute Component={HomePage} />}
-            />
-            <Route
-              path="/candidate/applications"
-              element={<PrivateRoute Component={Applications} />}
-            />
-            <Route
-              path="/candidate/application/:jobId"
-              element={<PrivateRoute Component={PostApplication} />}
-            />
-            <Route
-              path="/jobs"
-              element={<AuthRoute Component={JobListing} />}
-            />
-            <Route
-              path="/jobs/:id"
-              element={<AuthRoute Component={JobDetail} />}
-            />
-            <Route
-              path="/employer"
-              element={<EmployerRoute Component={HomePage} />}
-            />
-            <Route
-              path="/employer/postjob"
-              element={<EmployerRoute Component={PostNewJob} />}
-            />
-            <Route
-              path="employer/myjobs"
-              element={<EmployerRoute Component={ViewMyJobs} />}
-            />
-            <Route
-              path="/employer/applications"
-              element={<EmployerRoute Component={Applications} />}
-            />
+            <Route element={<CandidateRoute />}>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/candidate" element={<HomePage />} />
+              <Route
+                path="/candidate/applications"
+                element={<Applications />}
+              />
+              <Route
+                path="/candidate/application/:jobId"
+                element={<PostApplication />}
+              />
+            </Route>
+            <Route element={<AuthRoute />}>
+              <Route path="/jobs" element={<JobListing />} />
+              <Route path="/jobs/:id" element={<JobDetail />} />
+            </Route>
+
+            <Route element={<EmployerRoute />}>
+              <Route path="/employer" element={<HomePage />} />
+              <Route path="/employer/postjob" element={<PostNewJob />} />
+              <Route path="employer/myjobs" element={<ViewMyJobs />} />
+              <Route path="/employer/applications" element={<Applications />} />
+            </Route>
           </Route>
           <Route path="/*" element={<NotFoundPage />} />
         </Routes>

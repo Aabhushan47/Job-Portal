@@ -7,8 +7,6 @@ import { useNavigate } from "react-router-dom";
 
 const JobListing = () => {
   const [jobs, setJobs] = useState([]);
-  const navigate = useNavigate();
-  const { isAuthorized } = useContext(UserContext);
 
   useEffect(() => {
     axios
@@ -19,15 +17,13 @@ const JobListing = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  if (!isAuthorized) {
-    return navigate("/login");
-  }
   return (
-    <div className="m-4 grid grid-cols-1 gap-4 md:grid-cols-3 ">
-      {jobs &&
-        jobs.map((job, i) => {
-          return <JobCard key={i} data={job} />;
-        })}
+    <div className="w-full grid grid-cols-1 gap-4 md:grid-cols-3 p-2">
+      {jobs && jobs.length === 0 ? (
+        <div>No jobs available</div>
+      ) : (
+        jobs.map((job) => <JobCard key={job._id} data={job} />)
+      )}
     </div>
   );
 };

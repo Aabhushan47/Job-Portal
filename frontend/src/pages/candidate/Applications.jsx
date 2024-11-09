@@ -24,7 +24,7 @@ const Applications = () => {
             withCredentials: true,
           });
           setApplication(response.data.application);
-        } else {
+        } else if (loggedUser && loggedUser.role === "employer") {
           const response = await axios.get(`${API}/employer/application`, {
             withCredentials: true,
           });
@@ -103,7 +103,7 @@ const Applications = () => {
 
   return (
     <>
-      {application &&
+      {application && application.length > 0 ? (
         application.map((application, index) => {
           return (
             <div
@@ -208,7 +208,12 @@ const Applications = () => {
               )}
             </div>
           );
-        })}
+        })
+      ) : (
+        <div className="text-center text-lg text-red-500 p-8">
+          No Applications posted
+        </div>
+      )}
 
       {resumeModalOpen && (
         <Modal onClose={() => setResumeModalOpen(false)}>

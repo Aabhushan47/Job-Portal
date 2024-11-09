@@ -4,14 +4,17 @@ import { API } from "../../../config";
 import axios from "axios";
 import { UserContext } from "../../contexts/userContext";
 import { countries } from "countries-list";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faCross, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { Fragment } from "react";
+import DeleteModal from "../../components/DeleteModal";
 
 const ViewMyJobs = () => {
   const countriesList = Object.values(countries);
   const [myJob, setMyJob] = useState([]);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [jobToDelete, setJobToDelete] = useState(null);
   const [editingMode, setEditingMode] = useState(null);
   const { isAuthorized, loggedUser } = useContext(UserContext);
   const navigate = useNavigate();
@@ -30,10 +33,6 @@ const ViewMyJobs = () => {
     };
     fetchJob();
   }, []);
-
-  if (!isAuthorized && loggedUser.role === "employer") {
-    navigate("/");
-  }
 
   const handleEnableEdit = (jobId) => {
     setEditingMode(jobId);
@@ -58,17 +57,25 @@ const ViewMyJobs = () => {
 
   const handleDelete = async (jobId) => {
     try {
-      const confirmed = window.confirm("Are you Sure");
-      if (confirmed) {
-        const response = await axios.delete(`${API}/deletejob/${jobId}`, {
-          withCredentials: true,
-        });
-        toast.success(response.data.message);
-        setMyJob((prevJob) => prevJob.filter((job) => job._id !== jobId));
-      }
+      const response = await axios.delete(`${API}/deletejob/${jobId}`, {
+        withCredentials: true,
+      });
+      toast.success(response.data.message);
+      setMyJob((prevJob) => prevJob.filter((job) => job._id !== jobId));
+      setOpenDeleteModal(false);
     } catch (err) {
       toast.error(err.response.data.error);
     }
+  };
+
+  const deleteModalOpen = (jobId) => {
+    setJobToDelete(jobId);
+    setOpenDeleteModal(true);
+  };
+
+  const deleteModalClose = () => {
+    setJobToDelete(null);
+    setOpenDeleteModal(false);
   };
 
   const handleInputChange = (jobId, field, value) => {
@@ -81,8 +88,7 @@ const ViewMyJobs = () => {
 
   return (
     <>
-      <ToastContainer position="top-center" />
-      {myJob &&
+      {myJob && myJob.length > 0 ? (
         myJob.map((job, i) => {
           return (
             <Fragment key={job._id}>
@@ -142,7 +148,7 @@ const ViewMyJobs = () => {
                       placeholder="Enter city"
                     />
                     <select
-                      className={`text-lg text-black p-2 ${
+                      className={`text-lg text-gray-700 p-2 ${
                         editingMode === job._id
                           ? "border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                           : "bg-transparent"
@@ -292,7 +298,7 @@ const ViewMyJobs = () => {
                       </button>
                       <button
                         className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg transition"
-                        onClick={() => handleDelete(job._id)}
+                        onClick={() => deleteModalOpen(job._id)}
                       >
                         Delete
                       </button>
@@ -303,7 +309,18 @@ const ViewMyJobs = () => {
               </div>
             </Fragment>
           );
-        })}
+        })
+      ) : (
+        <div className="text-center text-lg text-red-500 p-8">
+          No job posted or job not found
+        </div>
+      )}
+      {openDeleteModal && (
+        <DeleteModal
+          onClose={deleteModalClose}
+          onDelete={() => handleDelete(jobToDelete)}
+        />
+      )}
     </>
   );
 };

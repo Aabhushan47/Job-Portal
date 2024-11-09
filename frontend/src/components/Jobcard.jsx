@@ -3,42 +3,41 @@ import {
   faLocationCrosshairs,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { UserContext } from "../contexts/userContext";
 
 const JobCard = (props) => {
   const { _id, title, country, location, description, category } = props.data;
-  const { loggedUser } = useContext(UserContext);
-  const role = loggedUser.role;
 
   return (
-    <div className="w-full">
-      <div className="bg-white rounded-lg shadow-md">
-        <div className="p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-xl font-bold">{title}</h3>
-
-              <div className="flex items-center gap-2 text-sm text-gray-600">
+    <div className="w-full mx-auto bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full">
+      <div className="p-6 flex-1">
+        <div className="flex flex-col space-y-4 md:flex-row md:justify-between md:space-y-0">
+          <div className="space-y-2">
+            <h3 className="text-xl font-bold tracking-tight">{title}</h3>
+            <div className="flex flex-wrap items-center gap-3 text-sm text-gray-600">
+              <div className="flex items-center">
                 <FontAwesomeIcon icon={faGlobe} />
                 <span>{country}</span>
+              </div>
+              <div className="flex items-center">
                 <FontAwesomeIcon icon={faLocationCrosshairs} />
                 <span>{location}</span>
-                <span>{category}</span>
               </div>
             </div>
           </div>
-          <p className="mt-4 text-sm text-gray-600">{description}</p>
         </div>
-        <div className="bg-gray-200 px-6 py-4 rounded-b-lg">
-          <Link
-            className="inline-flex h-9 items-center justify-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
-            to={`/jobs/${_id}`}
-          >
-            View Job
-          </Link>
-        </div>
+        <p className="mt-4 text-sm text-gray-600 overflow-hidden">
+          {description}
+        </p>
+      </div>
+      <div className="bg-gray-100 px-6 py-4">
+        <Link
+          to={`/jobs/${_id}`}
+          className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        >
+          View Job
+        </Link>
       </div>
     </div>
   );
